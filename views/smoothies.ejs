@@ -1,38 +1,40 @@
-<!-- Smoothies is for displaying all Questions -->
 <%- include('partials/header'); -%>
+
 <div class="loader hidden">
-  <img src="/Rolling.gif" style="height: 50px; width: 50px" />
-</div>
-<div class="wrapper">
-  <button type="button" class="btn-success">
-    <a href="/UpdateQuestionList" class="textC">Ask Question</a>
-  </button>
+  <img src="/Rolling.gif" alt="Loading..." />
 </div>
 
-<ul class="recipes">
-  <% question.forEach(function(q) { %>
-  <li class="recipe">
-    <img src="/logo4.png" alt="smoothie recipe icon" />
-    <h4><%= q.title %></h4>
-    <div class="simple">
-      <a href="/questions/<%= q._id %>" class="button-two" style="color: white">
-        <b>More-Info</b>
-      </a>
-      <%if(user && q.author.id.equals(user._id)){%>
-      <button type="button" onclick="doDelete('<%= q._id %>');">
-        <!-- <i class="fas fa-trash"></i> -->
-        <i class="fa fa-trash-o fa-lg"></i>
-      </button>
-      <%}%>
+<div class="container">
+  <div class="wrapper ask-question-wrapper">
+    <a href="/UpdateQuestionList" class="btn btn-lg">
+      <i class="fas fa-plus"></i> Ask Question
+    </a>
+  </div>
+
+  <div class="recipes">
+    <% question.forEach(function(q) { %>
+    <div class="recipe">
+      <img src="/logo4.png" alt="Question icon" />
+      <h4><%= q.title %></h4>
+      <div class="simple">
+        <a href="/questions/<%= q._id %>" class="btn">
+          <i class="fas fa-eye"></i> View Details
+        </a>
+        <%if(user && q.author.id.equals(user._id)){%>
+        <button type="button" class="btn btn-danger btn-sm" onclick="doDelete('<%= q._id %>');">
+          <i class="fas fa-trash"></i>
+        </button>
+        <%}%>
+      </div>
     </div>
-  </li>
-  <% }); %>
-</ul>
+    <% }); %>
+  </div>
+</div>
 
 <script>
   async function doDelete(questionID) {
     const loader = document.querySelector(".loader");
-    loader.className = "loader"; // class "loader hidden"
+    loader.className = "loader";
     try {
       const res = await fetch("/question/delete", {
         method: "POST",
@@ -48,4 +50,5 @@
     }
   }
 </script>
+
 <%- include('partials/footer'); -%>

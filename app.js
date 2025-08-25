@@ -42,7 +42,7 @@ mongoose
   .catch((err) => console.log(err));
 
 // routes
-app.get("*", checkUser);
+app.use(checkUser); // Apply checkUser to all routes
 app.get("/", (req, res) => res.render("home"));
 app.use("/profile", profileRoutes);
 app.use(authRoutes);

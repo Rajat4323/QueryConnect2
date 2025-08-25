@@ -1,43 +1,94 @@
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QueryConnect</title>
   <link rel="stylesheet" href="/styles.css" />
   <link rel="icon" type="image/x-icon" href="/CG.jpg">
-  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://kit.fontawesome.com/6e18d74916.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-  <nav>
-    <h3>
-      <ul>
-        <li><a href="/" class="btn new">DashBoard</a></li>
-      </ul>
-    </h3>
-    <ul>
-      <% if (user) { %>
-        <li>
-          <a href="/profile/<%= user._id %>" style="background-color: rgb(212, 211, 211); border-radius: 15px">
-            <b><i class="fas fa-user-circle"></i>Profile</b>
-          </a>
-        </li>
-        <li>
-          <a href="/logout" class="btn new">
-            LogOut
-            <i class="fas fa-sign-out-alt"></i>
-          </a>
-        </li>
-        <% } else { %>
-          <li>
-            <a href="/login" style="background-color: rgb(212, 211, 211); border-radius: 15px">Log in</a>
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        <a href="/" class="nav-home-btn">
+          <i class="fas fa-home"></i> 
+          <span class="brand-text">Dashboard</span>
+        </a>
+      </div>
+      
+      <div class="nav-toggle" id="navToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <ul class="nav-menu" id="navMenu">
+        <% if (user) { %>
+          <li class="nav-item">
+            <a href="/profile/<%= user._id %>" class="btn-success">
+              <i class="fas fa-user-circle"></i> 
+              <span class="nav-text">Profile</span>
+            </a>
           </li>
-          <li><a href="/signup" class="btn new">Sign up</a></li>
-          <% } %>
-    </ul>
+          <li class="nav-item">
+            <a href="/logout" class="btn-danger">
+              <i class="fas fa-sign-out-alt"></i> 
+              <span class="nav-text">Logout</span>
+            </a>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a href="/login" class="btn-secondary">
+              <i class="fas fa-sign-in-alt"></i> 
+              <span class="nav-text">Login</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/signup" class="btn">
+              <i class="fas fa-user-plus"></i> 
+              <span class="nav-text">Sign Up</span>
+            </a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
   </nav>
+
+  <script>
+    // Mobile navigation toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const navToggle = document.getElementById('navToggle');
+      const navMenu = document.getElementById('navMenu');
+      const navClose = document.getElementById('navClose'); // Added this line
+      
+      if (navToggle && navMenu) {
+        navToggle.addEventListener('click', function() {
+          navMenu.classList.toggle('active');
+          navToggle.classList.toggle('active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+          }
+        });
+      }
+
+      // Close mobile menu when clicking the close button
+      if (navClose) {
+        navClose.addEventListener('click', function() {
+          navMenu.classList.remove('active');
+          navToggle.classList.remove('active');
+        });
+      }
+    });
+  </script>
 </body>
 
 </html>

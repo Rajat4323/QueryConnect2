@@ -1,219 +1,184 @@
-<html lang="en">
+<%- include('../partials/header'); -%>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QueryConnect</title>
-  <link rel="stylesheet" href="/styles.css" />
-  <!-- Include stylesheet for Quill and highlight.js-->
-  <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> -->
- <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <!-- <script src="https://kit.fontawesome.com/6e18d74916.js" crossorigin="anonymous"></script> -->
+<div class="loader hidden">
+  <img src="/Rolling.gif" alt="Loading..." />
+</div>
 
-  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/monokai-sublime.min.css"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" />
-
-  <!-- Inlcude Scripts for Quill and highlight.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
-  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
-  <script src="https://kit.fontawesome.com/6e18d74916.js" crossorigin="anonymous"></script>
-</head>
-
-<body>
-  <div class="loader hidden">
-    <img src="/Rolling.gif" style="height: 50px; width: 50px" />
-  </div>
-  <nav>
-    <h3>
-      <ul>
-        <li><a href="/smoothies" class="btn new">
-            <p style="font-size: 20px;color: white;">Questions</p>
-          </a></li>
-      </ul>
-    </h3>
-    <ul>
-      <% if (user) { %>
-        <li>
-          <a href="/profile/<%= user._id %>" style="background-color: rgb(212, 211, 211); border-radius: 15px">
-            <b><i class="fas fa-user-circle"></i>Profile</b>
-          </a>
-        </li>
-        <li>
-          <a href="/logout" class="btn new">
-            LogOut
-            <i class="fas fa-sign-out-alt"></i>
-          </a>
-        </li>
-        <% } else { %>
-          <li>
-            <a href="/login" style="background-color: rgb(212, 211, 211); border-radius: 15px">Log in</a>
-          </li>
-          <li><a href="/signup" class="btn new">Sign up</a></li>
-          <% } %>
-    </ul>
-  </nav>
-
+<div class="container">
   <% if(answer){ %>
-    <div class="answer" style="margin-top: -80px">
-      <div class="Row" style="margin-left: 300px">
-        <div class="Column">
-          <h2>
-            <%= answer.topic %>
-          </h2>
-        </div>
-      </div>
-      <div class="Row" style="margin-left: 300px;">
-        <p style=" font-size: 25px; color: grey;display: inline-flex;">Author : <%= answer.author.name %>
-            <button onclick="doupVote('<%= answer._id %>');"
-              style="margin-left: 280px; margin-right: 20px; margin-top: 0px; cursor: pointer;">
-              <i class="fas fa-thumbs-up"></i>
+    <div class="answer">
+      <div class="card1">
+        <h2><%= answer.topic %></h2>
+        <div class="answer-meta">
+          <span class="author">
+            <i class="fas fa-user"></i> Author: <%= answer.author.name %>
+          </span>
+          <div class="vote-section">
+            <button onclick="doupVote('<%= answer._id %>');" class="btn btn-sm">
+              <i class="fas fa-thumbs-up"></i> Vote
             </button>
-            <%= answer.votes%>
-        </p>
-      </div>
-      <div class="Row">
-        <div class="card-body" style="
-        margin: auto;
-        margin-top: 2rem;
-        width: 50vw;
-        height:40vh;
-        overflow: scroll;
-        border-radius: 5px;
-        border: 8px solid lightskyblue;
-        padding: 10px;
-        background-color: white;">
-          <p class="card-text">
-            <%= answer.content %>
-          </p>
-        </div>
-
-      </div>
-      <div class="Row" style="margin-left: 300px">
-        <div class="Column">
-          <div class="comment-box">
-            <form class="comentForm">
-              <textarea type="text" name="comment" required></textarea>
-              <button class="btn-success-comment" style="margin-top: 2rem; margin-left: 9rem;background: #1597bb">
-                <p class="textC">comment</p>
-              </button>
-            </form>
-            <script>
-
-              const form = document.querySelector("form");
-              form.addEventListener("submit", async (e) => {
-                e.preventDefault();
-                //spinner activated
-                const loader = document.querySelector(".loader");
-                loader.className = "loader"; // class "loader hidden"
-                //get comment
-                const topic = form.comment.value;
-                try {
-                  const res = await fetch(
-                    "/answer/<%= answer._id %>/comment/new",
-                    {
-                      method: "POST",
-                      body: JSON.stringify({ topic }),
-                      headers: { "Content-Type": "application/json" },
-                    }
-                  );
-                  const data = await res.json();
-                  if (data.commentID) {
-                    location.assign("/answer/show/<%= answer._id %>");
-                  }
-                } catch (err) {
-                  console.log(err);
-                }
-              });
-            </script>
+            <span class="votes-count">
+              <i class="fas fa-star"></i> <%= answer.votes %> votes
+            </span>
           </div>
         </div>
       </div>
-      <% if(answer.comments.length===0){ %>
-        <div class="cc-box">
-          <div class="Row">
-            <h3>No Comments Availaible </h3>
-          </div>
+      
+      <div class="card">
+        <div class="answer-content">
+          <p><%= answer.content %></p>
         </div>
-        <%} else { answer.comments.forEach(function(comment){ %>
-          <div class="cc-box">
-            <div class="Row">
-              <p style="margin-bottom: 20px; font-size: 20px; color: brown;">
-                <%= comment.author.name %>
-              </p>
-              <div class="simple">
-                <p>
-                  <%= comment.topic %>
-                </p>
-                <% if(user && comment.author.id.equals(user._id)){ %>
-                  <button type="button" onclick="doDelete('<%= comment._id %>');">
-                    <!-- <i class="fas fa-trash"></i> -->
-                    <i class="fa-solid fa-trash"></i>
-                  </button>
-                  <% } %>
-              </div>
+      </div>
+      
+      <div class="comment-section">
+        <h3><i class="fas fa-comments"></i> Comments</h3>
+        
+        <div class="comment-form">
+          <form class="comentForm">
+            <div class="form-group">
+              <label for="comment">Add a Comment</label>
+              <textarea name="comment" id="comment" rows="3" placeholder="Write your comment..." required></textarea>
             </div>
-          </div>
-    </div>
-    <% })} %>
-      </div>
-
-      <script>
-        async function doupVote(answerID) {
-          //spinner activated
-          const loader = document.querySelector(".loader");
-          loader.className = "loader"; // class "loader hidden"
-          //delete logic
-          try {
-            const res = await fetch("/answer/upvote", {
-              method: "POST",
-              body: JSON.stringify({ answerID }),
-              headers: { "Content-Type": "application/json" },
-            });
-            const data = await res.json();
-            if (data.msg === "success") {
-              location.assign("/answer/show/<%= answer._id %>");
-            }
-          } catch (err) {
-            console.log(err);
-          }
-        }
-      </script>
-
-      <script>
-        async function doDelete(commentID) {
-          //spinner activated
-          const loader = document.querySelector(".loader");
-          loader.className = "loader"; // class "loader hidden"
-          //delete logic
-          try {
-            const res = await fetch("/comment/delete", {
-              method: "POST",
-              body: JSON.stringify({ commentID }),
-              headers: { "Content-Type": "application/json" },
-            });
-            const data = await res.json();
-            if (data.msg === "success") {
-              location.assign("/answer/show/<%= answer._id %>");
-            }
-          } catch (err) {
-            console.log(err);
-          }
-        }
-      </script>
-      <%} else { %>
-        <div class="Col"
-          style="background-color: rgb(142, 198, 142); padding: 20px 10px 20px 50px; width: 95%; border-radius: 10px;">
-          <h3 style="margin-right: 100px;color : black">
-            Answer does not exist.
-          </h3>
+            <button type="submit" class="btn">
+              <i class="fas fa-comment"></i> Post Comment
+            </button>
+          </form>
         </div>
+        
+        <% if(answer.comments.length===0){ %>
+          <div class="card text-center">
+            <h4><i class="fas fa-comment-slash"></i> No Comments Yet</h4>
+            <p>Be the first to comment on this answer!</p>
+          </div>
+        <% } else { %>
+          <div class="comments-list">
+            <% console.log('Comments:', answer.comments); %>
+            <% answer.comments.forEach(function(comment){ %>
+              <div class="cc-box">
+                <div class="comment-header">
+                  <span class="comment-author">
+                    <i class="fas fa-user-circle"></i> <%= comment.author ? comment.author.name : 'Unknown User' %>
+                  </span>
+                  <% if(user && comment.author && comment.author.id.equals(user._id)){ %>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="doDelete('<%= comment._id %>');">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  <% } %>
+                </div>
+                <div class="comment-content">
+                  <p><%= comment.topic %></p>
+                </div>
+              </div>
+            <% }) %>
+          </div>
         <% } %>
-</body>
+      </div>
+    </div>
+    
+    <script>
+      async function doupVote(answerID) {
+        const loader = document.querySelector(".loader");
+        loader.className = "loader";
+        try {
+          const res = await fetch("/answer/upvote", {
+            method: "POST",
+            body: JSON.stringify({ answerID }),
+            headers: { "Content-Type": "application/json" },
+          });
+          const data = await res.json();
+          if (data.msg === "success") {
+            location.assign("/answer/show/<%= answer._id %>");
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    </script>
 
-</html>
+    <script>
+      async function doDelete(commentID) {
+        const loader = document.querySelector(".loader");
+        loader.className = "loader";
+        try {
+          const res = await fetch("/comment/delete", {
+            method: "POST",
+            body: JSON.stringify({ commentID }),
+            headers: { "Content-Type": "application/json" },
+          });
+          
+          if (res.status === 401) {
+            alert("Please login to delete comments");
+            window.location.href = "/login";
+            return;
+          }
+          
+          const data = await res.json();
+          if (data.msg === "success") {
+            location.reload();
+          } else if (data.error) {
+            alert(data.error);
+          }
+        } catch (err) {
+          console.log(err);
+          alert("Error deleting comment. Please try again.");
+        } finally {
+          loader.className = "loader hidden";
+        }
+      }
+    </script>
+    
+    <script>
+      const form = document.querySelector(".comentForm");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const loader = document.querySelector(".loader");
+        loader.className = "loader";
+        
+        const topic = form.comment.value;
+        if (!topic.trim()) {
+          alert("Please enter a comment");
+          loader.className = "loader hidden";
+          return;
+        }
+        
+        try {
+          const res = await fetch("/answer/<%= answer._id %>/comment/new", {
+            method: "POST",
+            body: JSON.stringify({ topic }),
+            headers: { 
+              "Content-Type": "application/json"
+            },
+          });
+          
+          if (res.status === 401) {
+            alert("Please login to comment");
+            window.location.href = "/login";
+            return;
+          }
+          
+          const data = await res.json();
+          if (data.commentID) {
+            location.reload();
+          } else if (data.error) {
+            alert(data.error);
+          }
+        } catch (err) {
+          console.log(err);
+          alert("Error posting comment. Please try again.");
+        } finally {
+          loader.className = "loader hidden";
+        }
+      });
+    </script>
+  <% } else { %>
+    <div class="card text-center">
+      <h3><i class="fas fa-exclamation-triangle"></i> Answer Not Found</h3>
+      <p>This answer does not exist or has been removed.</p>
+      <a href="/smoothies" class="btn">
+        <i class="fas fa-arrow-left"></i> Back to Questions
+      </a>
+    </div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer'); -%>

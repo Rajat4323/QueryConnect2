@@ -1,19 +1,180 @@
 <%- include('partials/header'); -%>
 
-  <header>
-    <div class="loader hidden">
-      <img src="Rolling.gif" style="height: 50px; width: 50px" />
-    </div>
-    <div class="smoothie">
-      <img class="newImage" src="/newdoubt.png" alt="" />
-    </div>
-    <div class="headings">
-      <h2 style="margin-left: 60px;">QueryConnect</h2>
-      <h3 style="margin-left: 60px">Ask your question any time!</h3>
-      <a href="/smoothies" class="btn new" style="margin-left: 70px">
-        View Questions >>
-      </a>
-    </div>
-  </header>
+<div class="loader hidden">
+  <img src="/Rolling.gif" alt="Loading..." />
+</div>
 
-  <%- include('partials/footer'); -%>
+<!-- Hero Section -->
+<header class="hero-section">
+  <div class="hero-background">
+    <div class="hero-pattern"></div>
+    <div class="hero-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <i class="fas fa-star"></i>
+          <span>Join thousands of learners worldwide</span>
+        </div>
+        
+        <h1 class="hero-title">
+          <span class="title-line">Welcome to</span>
+          <span class="title-highlight">QueryConnect</span>
+        </h1>
+        
+        <p class="hero-description">
+          Join thousands of learners, experts, and curious minds in a vibrant community where questions find answers, 
+          knowledge flows freely, and connections are made.
+        </p>
+        
+        <div class="hero-buttons">
+          <a href="/smoothies" class="btn btn-primary btn-lg btn-explore">
+            <i class="fas fa-eye"></i>
+            <span>Explore Questions</span>
+            <div class="btn-shine"></div>
+          </a>
+          <a href="/signup" class="btn btn-secondary btn-lg btn-join">
+            <i class="fas fa-user-plus"></i>
+            <span>Join Community</span>
+          </a>
+        </div>
+      </div>
+      
+      <div class="hero-visual">
+        <div class="hero-image-container">
+          <div class="image-frame">
+            <img class="hero-logo" src="/newdoubt.png" alt="QueryConnect Community" />
+            <div class="image-overlay"></div>
+          </div>
+          
+          <div class="floating-elements">
+            <div class="floating-card floating-card-1">
+              <i class="fas fa-question-circle"></i>
+              <span>Ask Anything</span>
+            </div>
+            <div class="floating-card floating-card-2">
+              <i class="fas fa-users"></i>
+              <span>Connect</span>
+            </div>
+            <div class="floating-card floating-card-3">
+              <i class="fas fa-lightbulb"></i>
+              <span>Learn</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Features Section -->
+<section class="features-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Why Choose QueryConnect?</h2>
+      <p>Discover what makes our platform the perfect place for your learning journey</p>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-question-circle"></i>
+        </div>
+        <h3>Ask Anything</h3>
+        <p>From technical problems to academic questions, no topic is off-limits. Get answers from experts and community members.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3>Community Driven</h3>
+        <p>Connect with like-minded individuals, share your expertise, and build meaningful relationships in our growing community.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+        <h3>Expert Insights</h3>
+        <p>Access knowledge from professionals, academics, and enthusiasts across various fields and disciplines.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3>Quality Content</h3>
+        <p>Our community maintains high standards with moderated content and helpful, accurate responses.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-mobile-alt"></i>
+        </div>
+        <h3>Mobile Friendly</h3>
+        <p>Access QueryConnect anywhere, anytime with our responsive design that works perfectly on all devices.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-rocket"></i>
+        </div>
+        <h3>Fast & Reliable</h3>
+        <p>Get quick responses and enjoy a smooth, reliable platform experience designed for modern users.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>How It Works</h2>
+      <p>Getting started with QueryConnect is simple and straightforward</p>
+    </div>
+    
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Sign Up</h3>
+          <p>Create your free account and join our community of learners and experts.</p>
+        </div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Ask Questions</h3>
+          <p>Post your questions and get detailed answers from our community members.</p>
+        </div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Share Knowledge</h3>
+          <p>Help others by answering questions and sharing your expertise.</p>
+        </div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>Connect & Learn</h3>
+          <p>Build your network, learn from others, and grow your knowledge base.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer'); -%>

@@ -1,22 +1,34 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-const requireAuth = (req, res, next) => {
+const requireAuth = async (req, res, next) => {
   const token = req.cookies.jwt;
   // check json web token exists & is verified
   if (token) {
-    jwt.verify(token, "this is question asking website!!", (err, decodedToken) => {
-      if (err) {
-        console.log(err.message);
-        res.redirect("/login");
+    try {
+      const decodedToken = jwt.verify(token, "this is question asking website!!");
+      // Set req.user for API routes
+      const user = await User.findById(decodedToken.id);
+      req.user = user;
+      next();
+    } catch (err) {
+      console.log(err.message);
+      if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+        // API request
+        return res.status(401).json({ error: "Authentication required" });
       } else {
-        // console.log(decodedToken);
-        
-        next();
+        // Regular request
+        res.redirect("/login");
       }
-    });
+    }
   } else {
-    res.redirect("/login");
+    if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+      // API request
+      return res.status(401).json({ error: "Authentication required" });
+    } else {
+      // Regular request
+      res.redirect("/login");
+    }
   }
 };
 
