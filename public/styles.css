@@ -827,7 +827,7 @@ header .container {
 }
 
 .author {
-  color: var(--gray-600);
+  color: white;
   font-size: 0.9rem;
 }
 
@@ -838,7 +838,7 @@ header .container {
 }
 
 .votes-count {
-  color: var(--gray-600);
+  color: white;
   font-size: 0.9rem;
   font-weight: 500;
 }
